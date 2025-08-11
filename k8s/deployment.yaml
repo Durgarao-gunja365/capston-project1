@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: durga-capstone
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: durga-capstone
+  template:
+    metadata:
+      labels:
+        app: durga-capstone
+    spec:
+      containers:
+      - name: durga-capstone
+        image: durgarao365/durga_capstone_demo:latest
+
+        ports:
+        - containerPort: 8000

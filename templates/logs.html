@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Visitor Logs</h1>
+<table border="1" cellpadding="5" cellspacing="0">
+    <tr>
+        <th>Time</th>
+        <th>IP Address</th>
+        <th>Browser / OS</th>
+        <th>Page Visited</th>
+    </tr>
+    {% for log in logs %}
+    <tr>
+        <td>{{ log.time }}</td>
+        <td>{{ log.ip }}</td>
+        <td>{{ log.browser }}</td>
+        <td>{{ log.page }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
