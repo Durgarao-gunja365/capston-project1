@@ -1,0 +1,79 @@
+{
+  "annotations": { "list": [] },
+  "editable": true,
+  "graphTooltip": 0,
+  "panels": [
+    {
+      "type": "graph",
+      "title": "Django HTTP Requests / Second",
+      "targets": [
+        {
+          "expr": "rate(django_http_requests_total_by_method_total[1m])",
+          "legendFormat": "{{method}}",
+          "refId": "A",
+          "datasource": { "type": "prometheus", "uid": null }
+        }
+      ],
+      "id": 1
+    },
+    {
+      "type": "graph",
+      "title": "Django Request Latency (seconds)",
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.95, sum(rate(django_http_requests_latency_seconds_bucket[5m])) by (le))",
+          "legendFormat": "95th percentile",
+          "refId": "A",
+          "datasource": { "type": "prometheus", "uid": null }
+        }
+      ],
+      "id": 2
+    },
+    {
+      "type": "graph",
+      "title": "Database Query Time (seconds)",
+      "targets": [
+        {
+          "expr": "rate(django_db_execute_total_seconds_sum[1m]) / rate(django_db_execute_total_seconds_count[1m])",
+          "legendFormat": "avg query time",
+          "refId": "A",
+          "datasource": { "type": "prometheus", "uid": null }
+        }
+      ],
+      "id": 3
+    },
+    {
+      "type": "graph",
+      "title": "Container CPU Usage (%)",
+      "targets": [
+        {
+          "expr": "(rate(container_cpu_usage_seconds_total{name!=\"\", image!=\"\"}[1m]) * 100)",
+          "legendFormat": "{{container}}",
+          "refId": "A",
+          "datasource": { "type": "prometheus", "uid": null }
+        }
+      ],
+      "id": 4
+    },
+    {
+      "type": "graph",
+      "title": "Container Memory Usage (MB)",
+      "targets": [
+        {
+          "expr": "container_memory_usage_bytes{name!=\"\", image!=\"\"} / 1024 / 1024",
+          "legendFormat": "{{container}}",
+          "refId": "A",
+          "datasource": { "type": "prometheus", "uid": null }
+        }
+      ],
+      "id": 5
+    }
+  ],
+  "refresh": "10s",
+  "schemaVersion": 36,
+  "style": "dark",
+  "tags": ["django", "docker", "prometheus"],
+  "time": { "from": "now-15m", "to": "now" },
+  "title": "Django + Docker Monitoring",
+  "version": 2
+}
