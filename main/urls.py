@@ -1,8 +1,11 @@
 from django.urls import path
 from . import views
+from django.urls import include, path
 
 urlpatterns = [
     path('', views.home, name='home'),
     path('contact/', views.contact, name='contact'),
     path('logs/', views.view_logs, name='view_logs'),
+    path('', include('django_prometheus.urls')),
 ]
+
